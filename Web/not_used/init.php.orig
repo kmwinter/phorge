@@ -1,0 +1,260 @@
+<?php
+
+//print ($_SERVER['QUERY_STRING']);
+
+global $processingTime;
+$processingTime['init']['start'] = microtime(true);
+
+###
+
+
+
+#determine framework path
+define('FRAMEWORK_ROOT', rtrim(ini_get('auto_prepend_file'), '/prepend.php'));
+
+//get framework defaults from framework config.properties file
+require ('Properties.php');
+$p = new Properties();
+
+$p->load(file_get_contents(FRAMEWORK_ROOT .'/config.properties'));
+
+
+#default environment constants
+
+#define core, validator, and exception directories
+define('CORE_LIB', FRAMEWORK_ROOT . '/' . $p->getProperty('CORE_LIB'));
+define('EXCEPTION_LIB', $p->getProperty('EXCEPTION_LIB') );
+
+define('ACTION_LIB',$p->getProperty('ACTION_LIB'));
+define('MODULE_LIB', $p->getProperty('MODULE_LIB'));
+define('BLOCK_LIB', $p->getProperty('BLOCK_LIB') );
+define('VALIDATION_LIB', $p->getProperty('VALIDATION_LIB'));
+
+define('DEFAULT_VALIDATION_LIB', FRAMEWORK_ROOT . '/' . VALIDATION_LIB);
+define('DEFAULT_EXCEPTION_LIB', FRAMEWORK_ROOT . '/' . EXCEPTION_LIB);
+
+#define default action, module, and block libs. 
+#can be overwritten by custom settings
+define('DEFAULT_ACTION_ROOT', FRAMEWORK_ROOT . '/' . ACTION_LIB);
+define('DEFAULT_MODULE_ROOT', FRAMEWORK_ROOT . '/' . MODULE_LIB);
+define('DEFAULT_BLOCK_ROOT', FRAMEWORK_ROOT . '/' . BLOCK_LIB);
+
+#generic default value
+define('DEFAULT_VALUE', $p->getProperty('DEFAULT_VALUE'));
+
+#generic keys
+define('ACTION_KEY', $p->getProperty('ACTION_KEY'));
+define('SUB_ACTION_KEY',$p->getProperty('SUB_ACTION_KEY'));
+define('MODULE_KEY', $p->getProperty('MODULE_KEY'));
+define('VIEW_KEY', $p->getProperty('VIEW_KEY'));
+define('BLOCK_KEY', $p->getProperty('BLOCK_KEY'));
+define('EXCEPTION_KEY', $p->getProperty('EXCEPTION_KEY'));
+
+//define('STATIC_MODE','static');
+//define('DYNAMIC_MODE', 'dynamic');
+
+define('DEFAULT_SUCCESS_VIEW', $p->getProperty('DEFAULT_SUCCESS_VIEW'));
+define('DEFAULT_FAILURE_VIEW', $p->getProperty('DEFAULT_FAILURE_VIEW'));
+
+
+define('DEFAULT_ACTION_AUTORIZATION', strtolower($p->getProperty('DEFAULT_ACTION_AUTORIZATION')) == 'true'? true:false);
+
+define('DEFAULT_BLOCK_THROW_AUTH_EXCEPTION', strtolower($p->getProperty('DEFAULT_BLOCK_THROW_AUTH_EXCEPTION')) == 'true'? true:false);
+
+define('FAILURE', 0);
+define('FAILED', 0);
+define('SUCCESS', 1);
+define('SUCCEEDED', 1);
+
+
+define('DEFAULT_AUTH_HANDLER', $p->getProperty('DEFAULT_AUTH_HANDLER'));
+
+define('DEFAULT_BLOCK_HANDLER', $p->getProperty('DEFAULT_BLOCK_HANDLER'));
+define('DEFAULT_ACTION_HANDLER', $p->getProperty('DEFAULT_ACTION_HANDLER'));
+define('DEFAULT_EXCEPTION_HANDLER', $p->getProperty('DEFAULT_EXCEPTION_HANDLER'));
+
+
+define('SUB_ACTION_DISPATCHER', 'DefaultSubActionDispatcher');
+
+
+define('DEFAULT_BLOCK_DISPATCHER', $p->getProperty('DEFAULT_BLOCK_DISPATCHER'));
+define('DEFAULT_ACTION_DISPATCHER', $p->getProperty('DEFAULT_ACTION_DISPATCHER'));
+define('DEFAULT_EXCEPTION_DISPATCHER', $p->getProperty('DEFAULT_EXCEPTION_DISPATCHER'));
+
+define('DEFAULT_URL_MASK', $p->getProperty('DEFAULT_URL_MASK'));
+
+//define('DEFAULT_DISPATCHER_VIEWER', 'DefaultViewer');
+
+
+//time display options
+define('SHOW_TIME_LOG', 'log');
+define('SHOW_TIME_PRINT', 'print');
+define('SHOW_TIME_FALSE', false);
+
+define('DEFAULT_SHOW_TIME', $p->getProperty('DEFAULT_SHOW_TIME'));
+
+
+#====================================================================
+
+#load framework
+require_once DEFAULT_EXCEPTION_LIB . '/GeneralException.php';
+
+
+require_once 'util.php';
+loadLibrary(CORE_LIB . '/Interfaces');
+loadLibrary(CORE_LIB . '/Defaults');
+
+loadLibrary(CORE_LIB);
+loadLibrary(DEFAULT_ACTION_ROOT);
+loadLibrary(DEFAULT_EXCEPTION_LIB);
+
+loadLibrary(DEFAULT_VALIDATION_LIB);
+
+
+#====================================================================
+
+#load application custom settings
+
+//look for application config
+$prefix = "";
+for($i = 0; $i < 5; $i++ ){
+	$path = $prefix . 'Application.php';
+	if(file_exists($path)){
+		include_once($path);
+		break;
+	}
+	$prefix .= "../";
+}
+
+//TODO make AutoLoad a config.properties var
+if(defined('CUSTOM_LIB')){
+	if(file_exists(CUSTOM_LIB . '/AutoLoad')){
+		loadLibrary(CUSTOM_LIB . '/AutoLoad');
+	}
+	if(file_exists(CUSTOM_LIB . '/' . ACTION_LIB)){
+		loadLibrary(CUSTOM_LIB . '/' . ACTION_LIB);
+	}
+	if(file_exists(CUSTOM_LIB . '/' . EXCEPTION_LIB)){
+		loadLibrary(CUSTOM_LIB . '/' . EXCEPTION_LIB)	;
+	}
+	
+	if(file_exists(CUSTOM_LIB . '/' . VALIDATION_LIB)){
+		loadLibrary(CUSTOM_LIB . '/' . VALIDATION_LIB)	;
+	}
+	
+}
+
+
+#====================================================================
+
+#set constants to defaults if no custom defined values
+
+//chdir(FRAMEWORK_ROOT);
+
+if(!defined('ACTION_ROOT')){
+	//define('ACTION_ROOT', realpath('Blocks'));
+	define('ACTION_ROOT', DEFAULT_ACTION_ROOT);
+}
+
+if(!defined('MODULE_ROOT')){
+	define('MODULE_ROOT', DEFAULT_MODULE_ROOT);	
+}
+
+
+#if(!defined('WEB_ROOT')){
+#	define('WEB_ROOT', realpath('../htdocs'));	
+#}
+
+if(!defined('BLOCK_ROOT')){
+	define('BLOCK_ROOT', DEFAULT_BLOCK_ROOT);
+}
+
+if(!defined('AUTH_HANDLER')){
+	define('AUTH_HANDLER', DEFAULT_AUTH_HANDLER);
+}
+
+
+
+
+if(!defined('BLOCK_HANDLER')){
+	define('BLOCK_HANDLER', DEFAULT_BLOCK_HANDLER);
+}
+
+if(!defined('ACTION_HANDLER')){
+	define('ACTION_HANDLER', DEFAULT_ACTION_HANDLER);
+}
+
+if(!defined('EXCEPTION_HANDLER')){
+	define('EXCEPTION_HANDLER', DEFAULT_EXCEPTION_HANDLER);
+}
+
+
+
+if(!defined('BLOCK_DISPATCHER')){
+	define('BLOCK_DISPATCHER', DEFAULT_BLOCK_DISPATCHER);
+}
+
+if(!defined('ACTION_DISPATCHER')){
+	define('ACTION_DISPATCHER', DEFAULT_ACTION_DISPATCHER);
+}
+
+if(!defined('EXCEPTION_DISPATCHER')){
+	define('EXCEPTION_DISPATCHER', DEFAULT_EXCEPTION_DISPATCHER);
+}
+
+
+
+if(!defined('URL_MASK')){
+	define('URL_MASK', DEFAULT_URL_MASK);
+}
+
+
+if(!defined('SHOW_TIME')){
+
+	define('SHOW_TIME', DEFAULT_SHOW_TIME);
+}
+
+
+if(!defined('ACTION_AUTHORIZATION')){
+	define('ACTION_AUTHORIZATION', DEFAULT_ACTION_AUTORIZATION);
+}
+
+
+if(!defined('BLOCK_THROW_AUTH_EXCEPTION')){
+	define('BLOCK_THROW_AUTH_EXCEPTION', DEFAULT_BLOCK_THROW_AUTH_EXCEPTION);
+}
+
+if(!defined('PEAR_LOG_DEBUG')){
+	//make dummy PEAR_LOG_* constants 
+	define('PEAR_LOG_DEBUG', 0);
+	define('PEAR_LOG_WARN', 1);
+	define('PEAR_LOG_ERROR', 2);
+}
+
+global $log;
+
+
+global $log;
+if(!is_object($log)){
+	//make dummy logger
+	$log = new DefaultLogger;
+}
+
+
+
+
+global $model;
+
+global $request;
+
+global $blockModel;
+
+$request = new Request;
+
+$blockModel = new BlockModel($request);
+
+ini_set('auto_append_file', FRAMEWORK_ROOT . '/append.php');
+
+
+$processingTime['init']['stop'] = microtime(true);
+?>

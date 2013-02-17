@@ -1,0 +1,21 @@
+<?php 
+#$request = Phorge::getRequest();
+#pminclude('phorge:core.Phorge');
+#$response = Phorge::getResponse();
+global $AuthenticationException;
+$e = $AuthenticationException->get('exception');
+
+?>
+<html>
+<head><title>Login Form</title></head>
+<body>
+<h4>Login Form:</h4>
+<div style="color:#AD0000; font-weight:bold;"><?=$e->getMessage(); ?></div>
+<form action="<?= UrlService::getCurrentUrl(); ?>" method="POST">
+	User id:&nbsp;<input type="text" name="<?=$AuthenticationException->get('login_key')?>"/> &nbsp;
+    Password:&nbsp;<input type="password" name="<?=$AuthenticationException->get('password_key')?>" /><br/>
+	<br/>
+	<input type="submit" value="Login"/>
+</form>
+</body>
+</html>

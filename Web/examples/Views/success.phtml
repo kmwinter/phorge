@@ -1,0 +1,13 @@
+<?php
+#pminclude('phorge:core.Phorge');
+#$response = Phorge::getResponse();
+global $success;
+?>
+<html>
+<head><title>Action Successful</title></head>
+<body>
+<h2>Action Successful</h2>
+<h4><?=$success->get('message')?></h4>
+
+</body>
+</html>

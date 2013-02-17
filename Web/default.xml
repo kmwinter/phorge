@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ioc>
+    <!--
+    <component id="DefaultModule" class="phorge:core.IocModule">
+        <property name="name" value="Default"/>
+        <property name="directory" value="${mvc.root}/examples"/>
+        <property name="xmlFile" value="example.xml"/>
+    </component>
+    
+    -->
+
+    <component id="hw" class="phorge:core.Module">
+        <property name="name" value="HelloWorld"/>
+        <property name="directory" value="${mvc.root}/examples/Modules/HelloWorld"/>
+        <property name="namespace" value="hw"/>
+        <property name="defaultAction" value="Index"/>
+        <property name="configFile" value="init.php"/>
+    </component>
+
+    <component class="phorge:core.SimpleActionDispatcher">
+        <!--<property name="prefix" value="${mvc.root}/examples/Actions"/>-->
+        <property name="namespace" value="actions"/>
+    </component>
+
+    <component class="phorge:core.SimpleBlockDispatcher" >
+        <!-- <property name="namespace" value="blocks"/> -->
+        <property name="prefix" value="Blocks"/>
+        
+    </component>
+
+    <component class="phorge:core.SimpleExceptionDispatcher" />
+        
+    <component class="phorge:core.SimpleViewDispatcher">
+        <property name="viewDirectory" value="${mvc.root}/examples/Views"/>
+        <property name="appendValue" value=".phtml"/>
+    </component>
+    
+    <component id="logger" class="phorge:core.defaults.DefaultLogger">
+        <property name="level" value="WARN"/>
+    </component>
+
+        
+    
+
+
+    <component id="welcome" class="Default:Actions.Welcome">
+        <property name="externalMessage" value="this message was set via Ioc"/>
+    </component>
+
+
+    
+
+<!--
+    <component id="logger" class="phorge:core.defaults.NullLogger"/>
+
+    <component id="loginFilter" class="phorge:core.defaults.DefaultLoginFilter"/>
+
+    <bean id="sfp" class="phorge:core.IocModule">
+        <property name="name" value="sfp"/>
+        <property name="configFile" value="smarty.init.php"/>
+        <property name="directory" value="/www/lib/SmartyForPhorge/example"/>
+    </bean>
+    
+
+
+    <bean class="phorge:core.RewriteUrlMask">
+       <property name="actionExtension" value="do" />       
+       <property name="mappings">
+           <map>
+               <enrry id="/" value="Welcome"/>
+               <entry id="/HelloWorld/*" value="*,HelloWorld"/>
+       
+           </map>
+       </property>       
+    </bean>
+-->    
+    
+   
+    
+</ioc>
+

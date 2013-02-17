@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ioc>    
+    <!--
+    ##application configuration goes here        
+    -->
+    <component id="welcome" class="Default:Actions.Welcome">
+        <property name="externalMessage" value="this message was set via Ioc"/>
+    </component>
+</ioc>
+

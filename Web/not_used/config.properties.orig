@@ -1,0 +1,56 @@
+#Framework Defaults. 
+
+#default dir definitions
+CORE_LIB =						Core
+VALIDATION_LIB = 				Validators
+EXCEPTION_LIB = 				Exceptions
+
+ACTION_LIB =					Actions
+MODULE_LIB =					Modules
+BLOCK_LIB = 					Blocks	
+
+#DEFAULT_VALUE defines many things, namely the default action name
+DEFAULT_VALUE = 				Default
+
+
+DEFAULT_URL_MASK =				DefaultUrlMask
+
+#true will check authorization for each action
+DEFAULT_ACTION_AUTORIZATION = 			true
+
+#blocks throw auth exceptions?
+DEFAULT_BLOCK_THROW_AUTH_EXCEPTION = false;
+
+#DEFAULT_SHOW_TIME determines how to display the execution time
+#can be set to :
+#	SHOW_TIME_LOG - will output to a log (when global $log is defined by application)
+#	SHOW_TIME_PRINT - will print out results at the bottom of the HTML
+#	SHOW_TIME_FALSE - will not output execution time
+DEFAULT_SHOW_TIME =				SHOW_TIME_FALSE
+
+
+#define general key values. used by model, request, handler factory
+ACTION_KEY = 					action
+SUB_ACTION_KEY = 				sub_action
+MODULE_KEY = 					module
+VIEW_KEY = 						view
+BLOCK_KEY = 					block
+EXCEPTION_KEY = 				exception
+
+#define default success or failure view. also view suffixes
+DEFAULT_SUCCESS_VIEW = 			Success
+DEFAULT_FAILURE_VIEW = 			Failed
+
+
+#default handler classes
+DEFAULT_AUTH_HANDLER =			DefaultAuthHandler
+
+
+DEFAULT_BLOCK_HANDLER	=		DefaultBlockHandler
+DEFAULT_ACTION_HANDLER = 		DefaultActionHandler
+DEFAULT_EXCEPTION_HANDLER = 	DefaultExceptionHandler
+
+#default Dispatcher classes
+DEFAULT_BLOCK_DISPATCHER =		DefaultBlockDispatcher
+DEFAULT_ACTION_DISPATCHER = 	DefaultActionDispatcher
+DEFAULT_EXCEPTION_DISPATCHER =	DefaultExceptionDispatcher

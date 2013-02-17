@@ -1,0 +1,62 @@
+<?php
+//global $response;
+pminclude('phorge:core.Phorge');
+$response = Phorge::getResponse();
+$e = $response->get('exception');
+?>
+<html>
+<head>
+	<title>Exception Report</title>
+	<style>
+		.trace-item {
+			color: #BBBBBB;
+			padding: 2px;
+			margin: 2px;
+		}
+		
+		.trace-item-detail {
+			margin: 2px 2px 2px 15px;
+		}
+	</style>
+</head>
+<body>
+
+<div id="<?php echo $response->get('exception_name')?>" class="exception">
+	<?php 
+	if(Phorge::getConfigProperty(DEBUG) == 'true'){
+		echo '<b>' . $response->get('exception_name') . '</b></b>:';
+	}
+	?> 
+	<?php echo $response->get('message')?>
+	<br>
+	<?php 
+	if(Phorge::getConfigProperty(DEBUG) == 'true'){
+		displayStackTrace($e);
+	}
+	?> 
+
+	<?php
+            
+        //Phorge::displayBlock('Log');
+            
+        ?>
+</div>
+</body>
+</html>
+
+<?php
+function displayStackTrace($e){
+		
+	echo '<div class="trace-item">';
+	foreach($e->getTrace() as $step){			
+		echo '<div class="trace-item-detail">';
+		echo $step['file'] .': ' . $step['class'] .  $step['type'] . $step['function'] . ' <b>line ' . 
+					$step['line'] . '</b></b>';
+
+		echo '</div>';
+	}
+	echo '</div>';
+						
+	
+}
+?>

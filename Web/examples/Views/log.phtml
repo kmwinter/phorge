@@ -1,0 +1,14 @@
+<?php
+
+global $log;
+
+echo '<br/><br/>';
+
+foreach($log->get('messages') as $index => $messageArray){
+    $time = $messageArray['time'];
+    $message = $messageArray['message'];
+	echo '[' . date($log->get('date_format'), $time) . "] -- $message <br/>";
+
+}
+?>
+

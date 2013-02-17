@@ -1,0 +1,16 @@
+<?php
+pminclude('phorge:core.Phorge');
+$response = Phorge::getBlockResponse('HelloWorld', 'HelloWorld');
+?>
+
+<html>
+<head>
+	<title>HelloWorld</title>
+</head>
+	<body>		
+	
+		<h4><?php echo $response->get("message") ?></h4>		
+		<br>
+		
+	</body>
+</html>

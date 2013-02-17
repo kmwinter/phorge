@@ -1,0 +1,103 @@
+#confif file key			PHP constant variable
+#================================================
+lib.core = 					CORE_LIB
+lib.custom = 				CUSTOM_LIB
+
+application.root =          APPLICATION_ROOT
+
+#directory names
+dirname.custom =				CUSTOM_DIRNAME
+dirname.exceptions = 			EXCEPTION_DIRNAME
+dirname.actions = 				ACTION_DIRNAME
+dirname.modules = 				MODULE_DIRNAME
+dirname.blocks = 				BLOCK_DIRNAME
+dirname.view =                  VIEW_DIRNAME
+dirname.validators = 			VALIDATION_DIRNAME
+
+
+dir.web = 						WEB_DIR
+dir.custom = 					CUSTOM_DIR
+dir.actions = 					ACTION_DIR
+dir.modules = 					MODULE_DIR
+dir.blocks = 					BLOCK_DIR
+dir.exceptions = 				EXCEPTION_DIR
+dir.validators =				VALIDATION_DIR
+
+default.dir.actions = 			DEFAULT_ACTION_DIR
+default.dir.blocks = 			DEFAULT_BLOCK_DIR
+default.dir.modules = 			DEFAULT_MODULE_DIR
+default.dir.exceptions = 		DEFAULT_EXCEPTION_DIR
+default.dir.validators = 		DEFAULT_VALIDATION_DIR
+
+defaults.view.extension =       DEFAULT_VIEW_EXTENSION
+defauts.error.view =            DEFAULT_ERROR_VIEW
+
+web.root = 						WEB_ROOT
+
+public.dir                      PUBLIC_DIR
+
+#remove this?
+dir.base = 						BASE_DIR
+
+
+
+#generic keys
+key.default =				DEFAULT_KEY
+key.action = 				ACTION_KEY
+key.sub_action = 			SUB_ACTION_KEY
+key.module = 				MODULE_KEY
+key.id =					ID_KEY
+key.view =					VIEW_KEY
+key.block = 				BLOCK_KEY
+key.exception = 			EXCEPTION_KEY
+
+default.module =			DEFAULT_MODULE
+default.action = 			DEFAULT_ACTION
+
+view.class.package	=		VIEW_CLASS_PACKAGE
+view.success = 				SUCCESS_VIEW
+view.failure = 				FAILURE_VIEW
+
+authroize.actions = 		ACTION_AUTHORIZATION
+block.throw.exception = 	BLOCK_THROW_AUTH_EXCEPTION
+
+handler.auth = 				AUTH_HANDLER
+handler.auth.protected.actions = PROTECTED_ACTIONS
+handler.auth.uniqueid =		AUTH_UNIQUE_ID
+handler.auth.password = 	AUTH_PASSWORD
+
+#defaults.dispatcher.sub_action =		SUB_ACTION_DISPATCHER
+defaults.dispatcher.block = 			DEFAULT_BLOCK_DISPATCHER
+defaults.dispatcher.action =			DEFAULT_ACTION_DISPATCHER
+defaults.dispatcher.exception =         DEFAULT_EXCEPTION_DISPATCHER
+defaults.dispatcher.view =              DEFAULT_VIEW_DISPATCHER
+
+defaults.module.root    =               DEFAULT_MODULE_ROOT
+
+show.time =					SHOW_TIME
+url.mask = 					URL_MASK
+url.mask.action.page =		URL_MASK_ACTION_PAGE
+log.level =					LOG_LEVEL
+writer =					WRITER
+
+validator.label =			LABEL
+validator.message = 		MESSAGE
+
+
+append.file = 				APPEND_FILE
+
+custom.config.file = 		CUSTOM_CONFIG_FILE
+custom.config.file.depth =	CUSTOM_CONFIG_FILE_DEPTH
+
+default.action = 				INDEX_ACTION
+index.module = 				INDEX_MODULE
+
+debug = 					DEBUG
+log.diagnostic =            LOG_DIAGNOSTIC
+defaults.module.script =     DEFAULT_MODULE_SCRIPT
+defaults.action.extension = DEFAULT_ACTION_EXTENSION
+package.manager.treename = 	PACKAGE_MANAGER_TREENAME
+
+defaults.action.package =    DEFAULT_ACTION_PACKAGE
+
+ioc.xml.file =                  APPLICATION_XML_CONFIG

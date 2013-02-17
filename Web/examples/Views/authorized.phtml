@@ -1,0 +1,15 @@
+<?php
+pminclude('phorge:core.Phorge');
+$response = Phorge::getResponse();
+?>
+<html>
+<head><title>User Authorized</title></head>
+<body>
+<h2><?php echo $response->get('message')?></h2>
+    You have been authrorized to view this page
+
+
+    <br><br><br>
+    <a href="<?echo new ActionUrl('Logout') ?>">Logout</a>
+</body>
+</html>

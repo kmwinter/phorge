@@ -1,0 +1,99 @@
+<?php
+
+
+//require_once('Smarty.class.php');
+pminclude('smartydistro:Smarty');
+
+class PhorgedSmarty extends Smarty {
+	
+	
+	private static $properties;
+	
+	private $template;
+	private $loadedModules = array();
+	private $loadedBlocks = array();
+	
+	
+	//make properties static so that they're only read once per request
+	/*public static function getSmartyProperties(){
+		if(!self::$properties){
+			self::$properties = new Properties();
+			self::$properties->loadFile($path);
+		}
+		
+		return self::$properties;
+	}*/
+	
+	public function __construct(){
+		parent::__construct();
+		
+		
+		//$p = self::getSmartyProperties($propertiesPath);
+		
+		
+		$this->template_dir = Phorge::getConfigProperty('smarty.template.dir');
+		$this->compile_dir = Phorge::getConfigProperty('smarty.compile.dir');
+		$this->config_dir = Phorge::getConfigProperty('smarty.config.dir');
+		$this->cache_dir = Phorge::getConfigProperty('smarty.cache.dir');;
+		$this->plugins_dir = array(SMARTY_DIR . '/plugins/' , Phorge::getConfigProperty('smarty.plugins.dir'));		
+		$this->template = Phorge::getConfigProperty('smarty.template');
+		$this->assign('template', $this->template);
+		
+		$this->force_compile = (Phorge::getConfigProperty('smarty.force.compile') == 'true')? true:false ;
+		
+		$this->assign('current_date', time());
+	}
+	
+	public function display($path){
+		//echo '[path: ' . $this->template;
+		//echo "/$path";
+		//parent::display("$this->template/$path");		
+		//echo ']';
+		
+		$titleString = Phorge::getConfigProperty('smarty.title.string');
+		$result = parent::fetch("$this->template/$path");
+		$title = Phorge::getPageTitle();
+		print str_replace($titleString ,$title, $result);
+	}
+	
+	
+	public function fetch($path){
+		//TODO get rid of this
+		$titleString = Phorge::getConfigProperty('smarty.title.string');
+		
+		#echo 'this - ' . "$this->template/$path";
+		$result = parent::fetch("$this->template/$path");
+		$title = Framework::getPageTitle();
+		return str_replace($titleString , $title , $result);
+	}
+	
+	public function loadModule($moduleName, $defaultAction = DEFAULT_VALUE){
+		$this->loadedModules[$moduleName] = $defaultAction;
+	}
+	
+	public function loadBlock($blockName){
+		$this->loadedBlocks[] = $blockName;
+	}
+	
+	public function moduleIsLoaded($moduleName){
+		if(key_exists($moduleName, $this->loadedModules)){
+			return $this->loadedModules[$moduleName];
+		}
+		
+		return false;
+	}
+	
+	public function blockIsLoaded($block){
+		if(in_array($block, $this->loadedBlocks)){
+			return $this->loadedBlocks[$block];
+		}
+		
+		return false;
+	}
+	
+	public function getDefaultAction($moduleName){
+		return $this->moduleIsLoaded($moduleName);
+	}
+	
+}
+?>

@@ -1,0 +1,44 @@
+<?php
+pminclude('phorge:core.Phorge');
+pminclude('phorge:core.UrlService');
+pminclude('phorge:core.Url');
+pminclude('phorge:core.ActionUrl');
+pminclude('phorge:core.AuthManager');
+
+global $welcome;
+?>
+<html>
+<head>
+	<title>Phorge</title>
+</head>
+<body>
+        <?php Phorge::displayBlock('PageHeader');?>
+        <br/>
+        <h3>Application framework for php 5</h3>
+
+
+        <? echo ($welcome->containsKey('message'))? ('<h5>' . $welcome->get('message') . '</h5>') : ''  ?>
+
+        <? echo ($welcome->containsKey('externalMessage'))? ('<h5>(' . $welcome->get('externalMessage') . ')</h5>') : ''  ?>
+        
+
+        <br/><br/>
+        <a href="<?= new ActionUrl('HelloWorld') ?>">Hello World example</a>
+        <br/>
+        <a href="<?= new ActionUrl('Index', 'HelloWorld') ?>">Hello World Module example</a>
+        <br/>
+        <!--
+        <a href="<?= new Url('HelloWorldBlock.php') ?>">Hello World Block example</a>
+        <br/>
+        -->
+        <a href="<?= new ActionUrl ('FormExample')?>">Form Example</a>
+        <br/>
+        <br/>
+        <a href="<?= new ActionUrl ('Login')?>">Login</a>
+
+		
+				
+        <?= Phorge::displayBlock('Log');?>
+        
+	</body>
+</html>

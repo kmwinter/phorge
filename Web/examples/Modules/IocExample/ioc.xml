@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ioc>        
+    <bean class="phorge:core.SimpleActionDispatcher">
+        <property name="actionPackage" value="Actions"/>
+        <property name="actionNamespace" value="phorge"/>        
+    </bean>
+
+    <bean class="phorge:core.SimpleViewDispatcher">        
+        <property name="viewDirectory" value="${framework.root}/Views"/>
+        <property name="appendValue" value=".php"/>
+        <!--
+        <property name="modulePlaceholder" value="#module#"/>
+        <property name="moduleViewDirectory" value="${dir.modules}/#module#/Views"/>
+        -->
+        
+    </bean>
+    
+    <bean class="phorge:core.SimpleBlockDispatcher" >
+        <property name="blockPackage" value="Blocks"/>
+        <property name="blockNamespace" value="phorge"/>
+    </bean>
+    <bean class="phorge:core.SimpleExceptionDispatcher">
+        <property name="viewDirectory" value="${framework.root}/Views"/>
+        <property name="appendValue" value=".php"/>
+    </bean>
+</ioc>
+

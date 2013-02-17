@@ -1,0 +1,12 @@
+DirectoryIndex index.html index.php Home.php
+
+
+php_value auto_append_file None
+php_value auto_prepend_file None
+ 
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  #RewriteRule \.(do)$ phorge.php
+  #RewriteRule \.(do)\/ phorge.php
+  #RewriteRule !\.(js|ico|gif|jpg|png|css|php|html)$ phorge.php
+</IfModule>

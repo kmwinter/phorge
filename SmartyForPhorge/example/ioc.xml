@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : ioc.xml
+    Created on : October 23, 2008, 10:19 AM
+    Author     : kwinters
+    Description:
+        Purpose of the document follows.
+-->
+
+<ioc>
+    <bean name="viewDispatcher" class="sfp:phorge.SmartyViewDispatcher">
+        <property name="viewDirectory">
+            <list>                
+                <entry>${sfp.base}/Views</entry>
+            </list>
+        </property>
+        <property name="appendValue" value=".tpl"/>
+     </bean>            
+
+     <bean name="actionDispatcher" class="phorge:core.SimpleActionDispatcher">
+        <property name="prefix" value="lib.actions"/>
+     </bean>
+     
+     <bean name="blockDispatcher" class="phorge:core.SimpleBlockDispatcher">
+        <property name="prefix" value="lib.blocks"/>
+     </bean>
+         
+    <!--<bean name="exceptionDispatcher" class="sfp:phorge.SmartyExceptionDispatcher"/>-->
+        
+</ioc>
